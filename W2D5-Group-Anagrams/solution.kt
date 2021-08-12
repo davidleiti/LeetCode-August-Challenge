@@ -26,22 +26,12 @@ having a bit set to 1 at the position that specific letter. The mask is obtained
 3. Update the key with the output from the bitwise OR and return it after all the entire string has been consumed.
 */
 class SolutionDistinctChars {
-    fun groupAnagrams(strs: Array<String>): List<List<String>> {
-        val groups: MutableMap<Int, List<String>> = mutableMapOf()
-        for (str in strs) { 
-            val key = generateKey(str)
-            groups[key] = groups[key]?.plus(str) ?: listOf(str)
-        }
+    fun groupAnagrams(strs: Array<String>): List<List<String>> = 
+        strs.groupBy { generateKey(it) }.map { it.value }
 
-        return groups.values.toList()
-    }
-    
-    // Generate a numeric key for a given string based on its characters
-    fun generateKey(str: String): Int {
-        return str.fold(0) { key, char -> 
-            val charPos = char - 'a'
-            var mask = 1 shl charPos
-            key or mask
-        }
+    fun generateKey(str: String): Int = str.fold(0) { key, char -> 
+        val charPos = char - 'a'
+        var mask = 1 shl charPos
+        key or mask
     }
 }
