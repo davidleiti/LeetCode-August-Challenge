@@ -1,2 +1,3 @@
-# LeetCode-August-Challenge
-Solutions to the August LeetCoding challenge 2021
+# [August LeetCoding challenge 2021](https://leetcode.com/explore/challenge/card/august-leetcoding-challenge-2021/)
+
+The problem descriptions, the approaches, and the solution implementations can be found in the respective challenge's folders.
