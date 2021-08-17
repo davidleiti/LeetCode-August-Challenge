@@ -39,13 +39,13 @@ Since the largest window of s only has one 'a', return empty string.
 
 # Solution
 
-## First solution
+### Naive solution
 Originally I solved this problem in with a *small brain* approach, by creating a map of occurrences for each character in `t` and maintaining a list of positions at which they are present in `s`. 
 Based on this structure, the problem was solved by performing a single iteration of `s`, by at each step calculating the minimum and maximum from the lists of occurrences based on the contained characters from `t`.
 Based on this structure, the implemented algorithm conceptually would have had a complexity of `O(m + n)` since both strings were iterated only once, however, given the amount of computation that needed to be done at each step in the iteration of the first string, the performance was subpar. (continually calculating minimums and maximums didn't work out as planned).
 
-## Good solution
-Given the failure that was the first approach, after consulting the hints, I implemented a much more efficient solution that was based on the **Sliding Window Approach**. This idea should have come naturally from the problem description, since a minimum length window had to be found that meets a given criteria (in this case, containing all of the characters from `t`). 
+### Efficient solution
+Given the failure that was the first approach, after consulting the hints, I implemented a much more efficient and *big brain* solution that was based on the **Sliding Window Approach**. This idea should have come naturally from the problem description, since a minimum length window had to be found that meets a given criteria (in this case, containing all of the characters from `t`). 
 Based on this approach, the resulting algorithm managed to achieve a time complexity of `O(m + n)` and a space complexity of `O(n)`, and it was implemented as follows:
 1. Create a map of occurrences for the characters of `t` (same as in the previous implementation)
 2. Initialise the following variables:
@@ -55,7 +55,7 @@ Based on this approach, the resulting algorithm managed to achieve a time comple
 3. Start expanding the current window to the right until the condition isn't met, i.e. there are still characters that need to be included in the current window (`windowCharCount > 0`)
 4. Once the window met the criteria (`windowCharCount == 0`), check if its smaller than the current minimum and update the minimum if necessary.
 5. Start contracting the current window from the left as long as its still valid, and increment the `windowCharCount` once it omitted the first character that makes the window invalid
-6. Repeat the steps from (3) to (5) until the entire string has been traversed and the last window option was considered
+6. Repeat the steps from (3) to (5) until the entire string has been traversed and the last window option was reduced
 7. Return the substring from the indices `minWindowStart..minWindowStart + minWindowLength` or `""` if no valid window was found.
 
 ## Lessons learned: 
