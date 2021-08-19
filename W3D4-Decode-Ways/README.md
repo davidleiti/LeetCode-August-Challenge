@@ -55,10 +55,11 @@ Explanation: "06" cannot be mapped to "F" because of the leading zero ("6" is di
 
 # Solution
 
-This is yet another one of the problems for which the `Keep It Simple, Stupid` principle should have applied. 
-Originally I kind of solved this issue in an overcomplicated way with a single pass of the input string and lots of conditions and exceptions, which, as it should have been clear to me by now, is not the way to go. After this, I found the correct solution in one of the **Discussions** threads and it dawned on me how simply this problem can be reduced to a Dynamic Programming problem. 
+This is yet another one of the problems for which the `Keep It Simple, Stupid` principle should have been applied earlier. 
 
-The key to simplifying this problem is by traversing it in a reversed order, and considering the number of possible decoding combinations for the substring from the current index until the end of the string. Naturally, the last element can only be decoded in a single way, so the number of ways for the last element will be 0.
+Originally I solved this issue in an overcomplicated way with a single pass of the input string and lots of conditions and exceptions, which, as it should have been clear by now, is not the way to go in most cases. After this, I stumbled upon the correct solution in one of the **Discussions** threads and I realised how simply this problem can be solved if reduced to a Dynamic Programming problem. 
+
+The key to simplifying this problem is by traversing it in a reversed order, and considering the number of possible decoding combinations for the substring from the current index until the end of the string. Naturally, the last element can only be decoded in a single way, so the number of ways for the last element will be `0`.
 For the one before it, if the pair made of the last two elements is a valid one for decoding, the number of ways increases by the number of ways after the last two elements (1 in this case). Similarly, the entire string can be traversed one time to obtain the result in the following way:
 1. Check if the first element of the input string is `'0'`, in this case return `0` right away since no valid string can be decoded
 2. Initialise an array `combinations` with length `s.length + 1`, where the last element will be initialised with `1` and the rest with `0`, and which will hold at each index `i` the number of ways the substring of `s` between indices `i..s.length` can be decoded.
@@ -68,7 +69,7 @@ For the one before it, if the pair made of the last two elements is a valid one 
    3. If the characters at `index` and `index + 1` make a valid decode pair (as defined above), then the substring can naturally be decoded in as many additional ways as the substring from `index + 2` => `combinations[index] += combinations[index + 2]`.
 4. At the end of the iteration, the element at `combinations[0]` will contain the total number of ways in which the entire string can be decoded. In case there were any `'0'` elements that couldn't be used in valid pairs, this traversal already handled it such that the result will be `0`.
 
-### Observations: 
+## Observations: 
 - The logic from the (3) step of the algorithm leads to a "sort of" Fibonacci sequence of numbers, which in retrospective makes sense since when introducing "appending" a new character at the beginning of the string, if it can be also decoded as a pair with the first element, the resulting string can be decoded in as many ways as before + as if the first two characters were decoded as a pair. I say "sort of", because `'0'` characters disrupt this Fibonacci sequence, since they can only be used in pairs with other non-zero characters.
 - When the solution to a problem becomes too complex, most of the time it's better to scrap the solution and try finding a new approach, instead of tunnel visioning
 - **Remember to try using Dynamic Programming when the problem suggests it**
