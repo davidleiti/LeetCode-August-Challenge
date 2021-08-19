@@ -62,6 +62,6 @@ The solution hinted on the problem is slightly simpler: instead of persisting th
 
 After having the array of sums built, all that's left is to iterate over it and calculate the possible products by in the following way: `val product = sum * (targetSum - sum)`, where `targetSum` is the sum of the entire input graph.
 
-### Observations
+## Observations
 - While the second solution is much simpler in terms of complexity, for some reason the test benchmarks on LeetCode on average suggested the original solution to be around ~12.5% (350ms vs 400ms) faster in terms of execution speed, also using ~34% less memory (60 MB vs 81 MB). I am uncertain so far why this is the case, so I'll  hopefully get around to investigating it later.
 - Both approaches had a time complexity of `O(2*n) ~ O(n)`, and a space complexity of `O(n)`, where `n` is the number of nodes from the Binary Tree.
