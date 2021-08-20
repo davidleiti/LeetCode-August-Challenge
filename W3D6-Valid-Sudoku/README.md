@@ -13,6 +13,7 @@ Determine if a `9 x 9` Sudoku board is valid. Only the filled cells need to be v
  
 
 ### Example 1:
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" width="250" height="250" />
 
 ```
 Input: board = 
@@ -52,13 +53,17 @@ Explanation: Same as Example 1, except with the 5 in the top left corner being m
 
 # Solution
 
-This problem can be solved in the naive way by essentially performing three traversals of the input matrix and verifying if the currently traversed rows/columns/grids contain diplicates or not.
+This problem can be solved in the naive way by essentially performing three traversals of the input matrix and verifying if the currently traversed rows/columns/grids contain diplicates or not. **Time complexity**: `O(3 * n * m)`, **space complexity:** `O(n)`
 
 However, a more efficient approach is initialising a structure such as a `Set` or `Map` for each row, column, and grid which would represent the occurrences of digits. 
-After this, the problem can be solved by iterating a single time over the matrix and for the current element checking if it has already been found in either its row, column, or grid structure.
+After this, the problem can be solved by iterating a single time over the matrix and for the current element checking if it has already been found in either its row, column, or grid structure. **Time complexity:** `O(n * m)`, **space complexity:** `O(3 * n * m)`
 
 An even more efficient approach (and the used as the final solution) is using the bits of Integers as flags representing the presence of numbers on individual rows, columns, or grids. For example, the following row `["8","3",".",".","7",".",".",".","."]` could easily be converted to an integer made up of the following bits: `0000...0110010000` (would have been even better if Sudoku tables were made up of 8 rows and columns, so Bytes could be used instead of Integers, but oh well :)).
 Updating the occurrences of a row, for example, can be then made simply like so: `row or (1 shl cell)`, where `cell` is the current element from the matrix. 
 Based on this, the algorithm itself is exactly the same as the second iteration, but more efficient based on the following:
 - Space complexity is much smaller since for each row, column, and grid we only have to allocate an `Integer` instead of an entire data structure.
 - Verifying if a number was already used on a row, column, or grid, as well as updating the occurrences is much more efficient since only a couple of bitwise operations need to be performed on the integers keeping track of the numbers instead of data structure operations that most likely would imply calculating hash codes and additional overhead for modifying the data structures.
+
+## Observations: 
+- Time complexity: `O(n * m)`, where `n: number of rows` and `m: number of columns`
+- Space complexity: `O(n + m + b)`, where: `n: number of rows`, `m: number of columns`, and `b: number of grids`
